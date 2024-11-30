@@ -82,7 +82,7 @@ function cvsTEXTtoObject (cvsString, rowSize) {
 
       console.log(objects);
       return objects; //export the object.
-            }
+  }
 
 
 
@@ -102,10 +102,59 @@ function cvsTEXTtoObject (cvsString, rowSize) {
     }
 
     //This Function is To Add an Element to the CVS object at index 1.
-    function addElementToIndex (value) {
+
+    //
+    function insertElementIndex1 (cvsString, rowSize, newInsert) {
+   
+   
+      // Since the values categories repreat every four index then I do not need the \n and I will replace each to a comma first.
+            let newCVSString = cvsString.replaceAll("\n", ",");
+            let newIns = newInsert.replaceAll("\n", ",");
+
+            // Removing the commas
+            let cvsNoComma = [] ;
+            cvsNoComma = newCVSString.split(",");
+            newInsNoComma = newIns.split(",");
+            newInsNoComma.reverse(); // I added the reverse because for some reason when I inserted the newInsNoComma, it goes from last to first!!
+
+            // I Looped through the newInsertion to insert the elements one by one to the cvsNoComma.
+            for (k = 0; k < newInsNoComma.length; k++) { // I removed <= and I put < to avoid the first undefined outcome.
+              cvsNoComma.splice(4,0,newInsNoComma[k]);
+            }
+            
+            // For Testing the new cvsNoComma. It Works!
+            console.log(cvsNoComma);
+
+
+
+            const keys = cvsNoComma.slice(0, rowSize); // This const is to extract the first four elements and makes them as keys
+            const values = cvsNoComma.slice(rowSize);  // All other elements in the array are values
+
+            // Initializing an empty object.
+            const objects = [];
+
+            // Loop through the cvsNoComma minus the heading (Called array)
+            for (let i = 0; i < values.length; i += rowSize) {
+                  const scop = values.slice(i, i + rowSize); // Extract chunks of the RowSize values
+
+                  const cvsNEWobject = {}; // The New CVS Object initialization 
+
+                  // Loop through keys array to another slice
+                  keys.forEach( (key, index) => {
+                    cvsNEWobject[key] = scop[index]; 
+                  });
+                  objects.push(cvsNEWobject); // Add the New CVS Object to the result array
+            }
+            
+            console.log(objects);
+           return objects; //export the object.
+          }
+            //------------------------
+
       
 
-    }
+
+    
 
 
 
@@ -157,12 +206,29 @@ cvsTEXTtoObject(personalID, 5); // It works with Row Size of 5 columns. Bingo!
 console.log ('------------------------------------------------------------------------------------');
 
 
+
+
+
+
+
+
 //Part 4: Sorting and Manipulating Data
+
+
 console.log('Part 4: Sorting and Manipulating Data');
+
+// Removing the last element from the CVS array
+console.log ('Removing the last element from the CVS array');
 removeLastElement(cvsTEXTtoObject(cvsString1, 4));
 console.log ('------------------------------------------------------------------------------------');
 
 
+// Inserting an Object in the Index 1in the CVS array
+console.log ('Inserting an Object in the Index 1in the CVS array');
+const newInsert = `50,Mustafa,SW Engineer,46`
+const theRowSize = 4;
+insertElementIndex1(cvsString1, theRowSize,newInsert);
+console.log ('------------------------------------------------------------------------------------');
 
 
 
