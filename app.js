@@ -72,13 +72,13 @@ function cvsTEXTtoObject (cvsString, rowSize) {
               for (let i = 0; i < values.length; i += rowSize) {
                 const scop = values.slice(i, i + rowSize); // Extract chunks of the RowSize values
 
-                const cvsNEWobj = {}; // The New CVS Object initialization 
+                const cvsNEWobject = {}; // The New CVS Object initialization 
 
                 // Loop through keys array to another slice
                 keys.forEach( (key, index) => {
-                  cvsNEWobj[key] = scop[index]; 
+                  cvsNEWobject[key] = scop[index]; 
                 });
-                objects.push(cvsNEWobj); // Add the New CVS Object to the result array
+                objects.push(cvsNEWobject); // Add the New CVS Object to the result array
               }
               return objects; //export the object.
             }
