@@ -44,14 +44,10 @@ function cvsTEXT (cvsString, rowSize) {
 
 
 
-// NOT READY FOR USE.
 //This function is to convert the CVS Text to an object.
 // This function is to input the string, remove the commas and \n becuase the array size is four columns.
 function cvsTEXTtoObject (cvsString, rowSize) {
 
-  //Initialize an empty object.
-   let cvsObject = {};
-  
 
       // Since the values categories repreat every four index then I do not need the \n and I will replace each to a comma first.
       let newCVSString = cvsString.replaceAll("\n", ",");
@@ -173,8 +169,7 @@ function cvsTEXTtoObject (cvsString, rowSize) {
             // For Testing the new cvsNoComma. It Works!
             // console.log(cvsNoComma);
 
-            console.log(`Adding ( ${newaddition} ) to the End of the Array. `);
-
+            
             const keys = cvsNoComma.slice(0, addedRowSize); // This const is to extract the first four elements and makes them as keys
             const values = cvsNoComma.slice(addedRowSize);  // All other elements in the array are values
 
@@ -198,11 +193,27 @@ function cvsTEXTtoObject (cvsString, rowSize) {
           return objects; //export the object.
       }
 
-    
+
+//-------------------------------------------------------------------------------------------------------                
+
+  // Part 5: Full Circle   
+      function fullCircle (objects) {
+        let cvsFinalText = "";
+
+        objects.forEach (object => {
+          const converttoString = Object.values(object).join (","); // The Object.values() function has been used to convert the array (objects) values (object).
+          cvsFinalText += converttoString; // To add each value from the loop to the final string.
+        });
+        
+        cvsFinalText = cvsFinalText.trim(); // I used the .trim() function to remove the white spaces. Found it on Google.
+        console.log("The original CVS Format is :  ",cvsFinalText); 
+        return cvsFinalText; // Returned in case needed.
+      };
+
+//-------------------------------------------------------------------------------------------------------                
 
 
-
-
+//---------------- Functions' Run --------------//
 //Part 1: Refactoring Old Code
 
 // The string from CVS
@@ -279,6 +290,14 @@ console.log ('------------------------------------------------------------------
 // 3.Add the following object to the end of the array  
 console.log ('3. Adding an object to the end of the CVS Array')
 const newaddition = `13,Ammar,SW Engineer,14`;
+console.log(`Adding ( ${newaddition} ) to the End of the Array. `);
 const addedRowSize = 4;
 addingToTheEnd (cvsString1, addedRowSize,newaddition);
 console.log ('------------------------------------------------------------------------------------');
+
+
+
+
+// Part 5: Full Circle
+console.log ('Part 5: Full Circle.')
+fullCircle (addingToTheEnd(cvsString1, addedRowSize, newaddition));
