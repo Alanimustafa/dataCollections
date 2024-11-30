@@ -49,8 +49,9 @@ function cvsTEXT (cvsString, rowSize) {
 // This function is to input the string, remove the commas and \n becuase the array size is four columns.
 function cvsTEXTtoObject (cvsString, rowSize) {
 
-      //Initialize an empty object.
-      let cvsObject = {};
+  //Initialize an empty object.
+   let cvsObject = {};
+  
 
       // Since the values categories repreat every four index then I do not need the \n and I will replace each to a comma first.
       let newCVSString = cvsString.replaceAll("\n", ",");
@@ -59,16 +60,26 @@ function cvsTEXTtoObject (cvsString, rowSize) {
       let cvsNoComma = [] ;
       cvsNoComma = newCVSString.split(",");
       
-      console.log(cvsNoComma);
+      //console.log(cvsNoComma);
   
-        // To create the table rows
-        // I'm using the cvsNoComma array as the source array, and I will break it into 4-elements small arrays.
-        function cvsTableRows (cvsNoComma, rowSize) {
+      function cvsTableRows (cvsNoComma, rowSize) {
+        // Saving the results into an object of arrays
 
-          // Saving the results into an object of arrays
+
+//      cvsTable[`row${rowNumber}`] = cvsNoComma.slice(index, index + rowSize);
+        const obj = cvsNoComma.reduce((acc, cvsNoComma, index) => {
+          cvsObject[`CVS${cvsNoComma[index]}`] = cvsNoComma.slice(0,9);
+          return cvsObject;
+        }, {});
+        
+        // console.log(obj);
+       console.log(cvsObject);
 
       }
-    }
+
+      cvsTableRows (cvsNoComma, rowSize);
+   }
+    
 
 
 
@@ -97,6 +108,7 @@ console.log ('------------------------------------------------------------------
 
 
 
+
 // Part 2: Expanding Functionality
 
 // The row size is 5
@@ -109,10 +121,11 @@ console.log ('------------------------------------------------------------------
 
 
 
-//------------------------------------------------------------------------------------
+
+
 //Part 3: Transforming Data
 
 console.log('Part 3: Transforming Data');
-
+cvsTEXTtoObject(cvsString1,4);
 
   
