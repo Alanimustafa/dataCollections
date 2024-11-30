@@ -60,35 +60,52 @@ function cvsTEXTtoObject (cvsString, rowSize) {
       let cvsNoComma = [] ;
       cvsNoComma = newCVSString.split(",");
       
-      // This function 
-      function transformToObjects(array) {
-              const keys = array.slice(0, rowSize); // This const is to extract the first four elements and makes them as keys
-              const values = array.slice(rowSize);  // All other elements in the array are values
 
-              // Initializing an empty object.
-              const objects = [];
+      const keys = cvsNoComma.slice(0, rowSize); // This const is to extract the first four elements and makes them as keys
+      const values = cvsNoComma.slice(rowSize);  // All other elements in the array are values
 
-              // Loop through the cvsNoComma minus the heading (Called array)
-              for (let i = 0; i < values.length; i += rowSize) {
-                const scop = values.slice(i, i + rowSize); // Extract chunks of the RowSize values
+      // Initializing an empty object.
+      const objects = [];
 
-                const cvsNEWobject = {}; // The New CVS Object initialization 
+      // Loop through the cvsNoComma minus the heading (Called array)
+      for (let i = 0; i < values.length; i += rowSize) {
+            const scop = values.slice(i, i + rowSize); // Extract chunks of the RowSize values
 
-                // Loop through keys array to another slice
-                keys.forEach( (key, index) => {
-                  cvsNEWobject[key] = scop[index]; 
-                });
-                objects.push(cvsNEWobject); // Add the New CVS Object to the result array
-              }
-              return objects; //export the object.
+            const cvsNEWobject = {}; // The New CVS Object initialization 
+
+            // Loop through keys array to another slice
+            keys.forEach( (key, index) => {
+              cvsNEWobject[key] = scop[index]; 
+            });
+            objects.push(cvsNEWobject); // Add the New CVS Object to the result array
+      }
+
+      console.log(objects);
+      return objects; //export the object.
             }
 
-            const result = transformToObjects(cvsNoComma);
-            console.log(result);
-      
-   }
-    
 
+
+    
+  
+  
+
+
+    // Part 4: Sorting and Manipulating Data
+            
+    //This Function is To Remove the Last Element from the CVS object
+    function removeLastElement (value) {
+      let objectsRemovedLast = [];
+      objectsRemovedLast = value.pop();
+      console.log('Last element has been removed.')
+      console.log(objectsRemovedLast);
+    }
+
+    //This Function is To Add an Element to the CVS object at index 1.
+    function addElementToIndex (value) {
+      
+
+    }
 
 
 
@@ -139,6 +156,11 @@ cvsTEXTtoObject(cvsTEXTNew, 4);
 cvsTEXTtoObject(personalID, 5); // It works with Row Size of 5 columns. Bingo!
 console.log ('------------------------------------------------------------------------------------');
 
+
+//Part 4: Sorting and Manipulating Data
+console.log('Part 4: Sorting and Manipulating Data');
+removeLastElement(cvsTEXTtoObject(cvsString1, 4));
+console.log ('------------------------------------------------------------------------------------');
 
 
 
