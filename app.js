@@ -60,24 +60,32 @@ function cvsTEXTtoObject (cvsString, rowSize) {
       let cvsNoComma = [] ;
       cvsNoComma = newCVSString.split(",");
       
-      //console.log(cvsNoComma);
-  
-      function cvsTableRows (cvsNoComma, rowSize) {
-        // Saving the results into an object of arrays
+      // This function 
+      function transformToObjects(array) {
+              const keys = array.slice(0, rowSize); // This const is to extract the first four elements and makes them as keys
+              const values = array.slice(rowSize);  // All other elements in the array are values
 
+              // Initializing an empty object.
+              const objects = [];
 
-//      cvsTable[`row${rowNumber}`] = cvsNoComma.slice(index, index + rowSize);
-        const obj = cvsNoComma.reduce((acc, cvsNoComma, index) => {
-          cvsObject[`CVS${cvsNoComma[index]}`] = cvsNoComma.slice(0,9);
-          return cvsObject;
-        }, {});
-        
-        // console.log(obj);
-       console.log(cvsObject);
+              // Loop through the cvsNoComma minus the heading (Called array)
+              for (let i = 0; i < values.length; i += rowSize) {
+                const scop = values.slice(i, i + rowSize); // Extract chunks of the RowSize values
 
-      }
+                const cvsNEWobj = {}; // The New CVS Object initialization 
 
-      cvsTableRows (cvsNoComma, rowSize);
+                // Loop through keys array to another slice
+                keys.forEach( (key, index) => {
+                  cvsNEWobj[key] = scop[index]; 
+                });
+                objects.push(cvsNEWobj); // Add the New CVS Object to the result array
+              }
+              return objects; //export the object.
+            }
+
+            const result = transformToObjects(cvsNoComma);
+            console.log(result);
+      
    }
     
 
@@ -126,6 +134,14 @@ console.log ('------------------------------------------------------------------
 //Part 3: Transforming Data
 
 console.log('Part 3: Transforming Data');
-cvsTEXTtoObject(cvsString1,4);
+cvsTEXTtoObject(cvsString1, 4);
+cvsTEXTtoObject(cvsTEXTNew, 4);
+cvsTEXTtoObject(personalID, 5); // It works with Row Size of 5 columns. Bingo!
+console.log ('------------------------------------------------------------------------------------');
+
+
+
+
+
 
   
